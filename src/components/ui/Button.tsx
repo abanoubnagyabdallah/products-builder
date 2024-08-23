@@ -14,7 +14,7 @@ export default function Button({
 }: IProps) {
   return (
     <button
-      className={`${className} ${width} p-2 rounded-md text-white`}
+      className={`${className} ${width} p-2 rounded-lg text-white`}
       {...rest}
     >
       {children}

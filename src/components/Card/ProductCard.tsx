@@ -34,7 +34,7 @@ export default function ProductCard({ product }: IProps) {
           <span>{price}</span>
           <Image
             imageURL={category.imageURL}
-            alt="product icon"
+            alt={category.name}
             className="w-10 h-10 rounded-full object-center"
           />
         </div>
