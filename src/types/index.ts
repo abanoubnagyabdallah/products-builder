@@ -1,1 +1,1 @@
-export type ProductNameTypes = "title" | "description" | "imageURL" | "price";
+export type productNameType = "title" | "description" | "imageURL" | "price";
