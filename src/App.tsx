@@ -5,6 +5,8 @@ import { formInputsList, productList } from "./data";
 import Button from "./components/ui/Button";
 import Input from "./components/ui/Input";
 import { IProduct } from "./interfaces";
+import { productValidation } from "./validation";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 
 function App() {
   // ============ state ===========
@@ -17,20 +19,47 @@ function App() {
     category: { name: "", imageURL: "" },
     colors: [],
   });
+
+  const [errors, setErrors] = useState({
+    title: "",
+    description: "",
+    imageURL: "",
+    price: "",
+  });
+
   // ============ state ===========
 
   // =========== handler ==========
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
+
   const onchangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
     setProduct({ ...products, [name]: value });
+    setErrors({...errors,[name]:""})
   };
+
   const submitHundler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    console.log(products);
+    const { title, description, imageURL, price } = products;
+    const errorsObject = productValidation({
+      title,
+      description,
+      imageURL,
+      price,
+    });
     
+    // check any property has a value of "" && check if all properties have a value of ""
+    const hasErrorMessage =
+      Object.values(errorsObject).some((value) => value === "") &&
+      Object.values(errorsObject).every((value) => value === "");
+      if(!hasErrorMessage){
+        setErrors(errorsObject);
+        return;
+      }
+    console.log(hasErrorMessage);
   };
+
   function cancelProduct(): void {
     setProduct({
       title: "",
@@ -40,7 +69,7 @@ function App() {
       category: { name: "", imageURL: "" },
       colors: [],
     });
-    closeModal()
+    closeModal();
   }
   // =========== handler ==========
 
@@ -65,6 +94,7 @@ function App() {
         value={products[input.name]}
         onChange={onchangeHandler}
       />
+      <ErrorMessage msg={errors[input.name]} />
       <br />
     </div>
   ));
