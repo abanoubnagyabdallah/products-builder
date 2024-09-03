@@ -1,14 +1,15 @@
 import { IProduct } from "../../interfaces";
 import { textSlicer } from "../../utils/function";
 import Image from "../Image/Image";
+import ProductColors from "../ProductColors/ProductColors";
 import Button from "../ui/Button";
 
 interface IProps {
-  product:IProduct
+  product: IProduct;
 }
 
 export default function ProductCard({ product }: IProps) {
-  const { title, description, imageURL, price,category } = product;
+  const { title, description, imageURL, price, category ,colors} = product;
   return (
     <>
       <div className="border rounded-md p-2 flex flex-col max-w-sm md:max-w-lg mx-auto md:mx-0 ">
@@ -20,18 +21,16 @@ export default function ProductCard({ product }: IProps) {
 
         <h3>{title}</h3>
 
-        <p>{textSlicer(description,60)}</p>
+        <p>{textSlicer(description, 60)}</p>
 
-        <div className="flex space-x-2 items-center my-4">
-          <span
-            className={`w-5 h-5 rounded-full bg-indigo-600 cursor-pointer`}
-          ></span>
-          <span className="w-5 h-5 rounded-full bg-yellow-600 cursor-pointer"></span>
-          <span className="w-5 h-5 rounded-full bg-red-600 cursor-pointer"></span>
+        <div className="flex space-x-2 items-center my-4 justify-center flex-wrap">
+          {colors.map((color) => (
+            <ProductColors key={color} color={color} />
+          ))}
         </div>
 
         <div className="flex justify-between items-center">
-          <span>{price}</span>
+          <span className="text-indigo-600 font-semibold">${price}</span>
           <Image
             imageURL={category.imageURL}
             alt={category.name}

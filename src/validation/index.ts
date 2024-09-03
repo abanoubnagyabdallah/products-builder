@@ -12,7 +12,7 @@ interface IValidate {
  */
 
 
-export const productValidation = (product: IValidate): object => {
+export const productValidation = (product: IValidate) => {
   // return an object
   const errors: IValidate = {
     title: "",
