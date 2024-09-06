@@ -6,10 +6,28 @@ import Button from "../ui/Button";
 
 interface IProps {
   product: IProduct;
+  setProductToEdit: (product: IProduct) => void;
+  openeditmodal: () => void;
+  idx: number;
+  setProducttoEditbyIndex: (value: number) => void;
+  openConfirmModal:()=>void;
 }
 
-export default function ProductCard({ product }: IProps) {
-  const { title, description, imageURL, price, category ,colors} = product;
+export default function ProductCard({ product, setProductToEdit, openeditmodal ,idx,setProducttoEditbyIndex,openConfirmModal}: IProps) {
+  const { title, description, imageURL, price, category, colors } = product;
+
+  // =========== start handel ============
+  const HandelClickEvent = () => {
+    setProductToEdit(product);
+    openeditmodal()   
+     setProducttoEditbyIndex(idx);
+  };
+
+  const handelDelete=()=>{
+    setProductToEdit(product);
+    openConfirmModal()
+  };
+  // =========== end handel ============
   return (
     <>
       <div className="border rounded-md p-2 flex flex-col max-w-sm md:max-w-lg mx-auto md:mx-0 ">
@@ -23,7 +41,7 @@ export default function ProductCard({ product }: IProps) {
 
         <p>{textSlicer(description, 60)}</p>
 
-        <div className="flex space-x-2 items-center my-4 justify-center flex-wrap">
+        <div className="flex space-x-2 items-center my-4  flex-wrap">
           {colors.map((color) => (
             <ProductColors key={color} color={color} />
           ))}
@@ -39,11 +57,19 @@ export default function ProductCard({ product }: IProps) {
         </div>
 
         <div className="flex justify-between items-center space-x-2 my-3">
-          <Button className="bg-indigo-700" width="w-full">
-            EDIT
+          <Button
+            className="bg-indigo-700 hover:bg-indigo-800"
+            width="w-full"
+            onClick={HandelClickEvent}
+          >
+            Edit
           </Button>
-          <Button className="bg-red-700" width="w-full">
-            DELETE
+          <Button
+            className="bg-[#c2344d] hover:bg-red-800"
+            width="w-full"
+            onClick={handelDelete}
+          >
+            Delete
           </Button>
         </div>
       </div>
