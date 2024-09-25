@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { IProduct } from "../../interfaces";
 import { textSlicer } from "../../utils/function";
 import Image from "../Image/Image";
@@ -13,7 +14,7 @@ interface IProps {
   openConfirmModal:()=>void;
 }
 
-export default function ProductCard({ product, setProductToEdit, openeditmodal ,idx,setProducttoEditbyIndex,openConfirmModal}: IProps) {
+function ProductCard({ product, setProductToEdit, openeditmodal ,idx,setProducttoEditbyIndex,openConfirmModal}: IProps) {
   const { title, description, imageURL, price, category, colors } = product;
 
   // =========== start handel ============
@@ -76,3 +77,5 @@ export default function ProductCard({ product, setProductToEdit, openeditmodal ,
     </>
   );
 }
+
+export default memo(ProductCard);
